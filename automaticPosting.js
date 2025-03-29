@@ -1,5 +1,7 @@
 const { postReel } = require("./postReelToInstagram");
-const reels = require("./reels.json");
+const reels = require("./links.json");
+const getReelData = require("./getReelData");
+const sendMessage = require("./sendMessage");
 const fs = require("fs").promises; // For file operations
 require("dotenv").config();
 
@@ -32,7 +34,7 @@ async function uploadReels() {
   }
 
   const reel = reels[nextIndex];
-  const { videoUrl, userName, owner_fullname, caption, hashtags } = reel;
+  const { videoUrl, userName, owner_fullname, caption, hashtags } = await getReelData(reel);
 
   try {
     // Validate required fields
@@ -58,6 +60,15 @@ async function uploadReels() {
         containerId: result.containerId,
         mediaId: result.publishedMediaId,
       });
+
+      // send confirmation message to telegram
+      const date = new Date().toLocaleString();
+      const progress = `${nextIndex + 1}/${reels.length}`;
+      const daysCounter = `Day ${nextIndex + 1}`;
+      const telegramMessage = `Reel uploaded successfully!\nDate: ${date}\nProgress: ${progress}\n${daysCounter}\nContainer ID: ${result.containerId}\nMedia ID: ${result.publishedMediaId}`;
+
+      await sendMessage(telegramMessage);
+
       // Update tracker only on success
       tracker.lastPostedIndex = nextIndex;
       await fs.writeFile(TRACKER_FILE, JSON.stringify(tracker, null, 2));
