@@ -12,22 +12,30 @@ async function createMediaContainer(video_url, caption, userName, owner_fullname
 
   try {
     const baseHashtags = [
-      // English
-      '#Islam', '#Muslim', '#Quran', '#Allah', '#IslamicQuotes', '#Muslimah', '#Sunnah', '#Dua', '#Ramadan', '#Hijab',
-      '#Islamic', '#Makkah', '#Jannah', '#Alhamdulillah', '#QuranVerses', '#Hadith', '#IslamicPost', '#Deen', '#Prayer', '#ProphetMuhammad',
-      // Arabic
-      '#إسلام', '#مسلم', '#قرآن', '#الله', '#إسلامي', '#دين', '#دعاء', '#مكة', '#الجنة', '#الحديث', '#رمضان', '#حجاب', '#سنة', '#الحمد_لله', '#سبحان_الله', '#الله_أكبر'
+      '#Islam', '#Muslim', '#Quran', '#Allah', '#IslamicQuotes',
+      '#قرآن', '#الله', '#إسلامي', '#الحمد_لله', '#سبحان_الله', '#الله_أكبر'
     ];
 
-    const CAPTION = `✨ فَذَكِّرْ ✨
+    function trimHashtagsToFitLimit(limit, base, tags) {
+      let caption = base;
+      for (const tag of tags) {
+        if ((caption + ' ' + tag).length <= limit) {
+          caption += ' ' + tag;
+        } else {
+          break;
+        }
+      }
+      return caption;
+    }
+
+    const baseCaption = `✨ فَذَكِّرْ ✨
     مقاطع قصيرة من القرآن الكريم، تلاوات تلامس القلوب وتُحيي الأرواح 💖
     اجعل القرآن رفيقك وشاركه لعلّه يهدي قلوبًا 🌿
     
     Original owner of the Reel: ${owner_fullname}
-    @${userName}
-    ${baseHashtags.join(' ')}
-    ${hashtags.join(' ')}
-    `;
+    @${userName}`;
+
+    const CAPTION = trimHashtagsToFitLimit(2200, baseCaption, [...hashtags, ...baseHashtags]);
 
     const response = await axios.post(
       `https://graph.facebook.com/v20.0/${IG_USER_ID}/media`,
