@@ -11,7 +11,24 @@ async function createMediaContainer(video_url, caption, userName, owner_fullname
   if (!hashtags || !Array.isArray(hashtags)) throw new Error('Hashtags must be an array');
 
   try {
-    const CAPTION = `Original owner of the Reel: ${owner_fullname}\n@${userName}\n${hashtags.join(' ')}`;
+    const baseHashtags = [
+      // English
+      '#Islam', '#Muslim', '#Quran', '#Allah', '#IslamicQuotes', '#Muslimah', '#Sunnah', '#Dua', '#Ramadan', '#Hijab',
+      '#Islamic', '#Makkah', '#Jannah', '#Alhamdulillah', '#QuranVerses', '#Hadith', '#IslamicPost', '#Deen', '#Prayer', '#ProphetMuhammad',
+      // Arabic
+      '#إسلام', '#مسلم', '#قرآن', '#الله', '#إسلامي', '#دين', '#دعاء', '#مكة', '#الجنة', '#الحديث', '#رمضان', '#حجاب', '#سنة', '#الحمد_لله', '#سبحان_الله', '#الله_أكبر'
+    ];
+
+    const CAPTION = `✨ فَذَكِّرْ ✨
+    مقاطع قصيرة من القرآن الكريم، تلاوات تلامس القلوب وتُحيي الأرواح 💖
+    اجعل القرآن رفيقك وشاركه لعلّه يهدي قلوبًا 🌿
+    
+    Original owner of the Reel: ${owner_fullname}
+    @${userName}
+    ${baseHashtags.join(' ')}
+    ${hashtags.join(' ')}
+    `;
+
     const response = await axios.post(
       `https://graph.facebook.com/v20.0/${IG_USER_ID}/media`,
       {

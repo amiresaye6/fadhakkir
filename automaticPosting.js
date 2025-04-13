@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 require("dotenv").config();
 const axios = require("axios");
 
-const TRACKER_FILE = "posted_tracker.json";
+const TRACKER_FILE = "tracker.json";
 
 async function uploadReels() {
   if (!process.env.PAGE_ACCESS_TOKEN?.trim() || !process.env.INSTAGRAM_BUSINESS_ID?.trim()) {

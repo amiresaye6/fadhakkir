@@ -1,0 +1,18 @@
+potential names:
+الشيخ احمد الجمي
+الشيخ ماهر المعيقلي
+الشيخ ياسر الدوسري
+https://www.tiktok.com/@anasmo9amed
+
+// notes //
+ we need to store the reels on owr own storage to provide consistancy, so ther will be two steps
+ fist we need to get all teh reels we want to add to our queue
+ then download them all, upload them all to the google drive, store all the reels data including the direct url of the reels
+ from our storage instad of instagram's one, and then this resulting json file shold be appendable, each time we add new reels,
+ this file will be updated,
+ second, i should modify automaticPosting.js file to loop over the "overall" json file that we just created instead of calling the
+ instagram fetch data function each time.
+
+ waht i need to do,
+ 1/ create the new script that will fetch data, download it, upload it to google drive
+ 2/ update automaticPosting.js to handle this json file and add error messages support.
