@@ -4,10 +4,9 @@ require('dotenv').config();
 const ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const IG_USER_ID = process.env.INSTAGRAM_BUSINESS_ID;
 
-async function createMediaContainer(video_url, caption, userName, owner_fullname, hashtags) {
+async function createMediaContainer(video_url, caption, userName, hashtags) {
   if (!video_url) throw new Error('Video URL is required');
   if (!userName) throw new Error('Username is required');
-  if (!owner_fullname) throw new Error('Owner full name is required');
   if (!hashtags || !Array.isArray(hashtags)) throw new Error('Hashtags must be an array');
 
   try {
@@ -32,8 +31,8 @@ async function createMediaContainer(video_url, caption, userName, owner_fullname
     مقاطع قصيرة من القرآن الكريم، تلاوات تلامس القلوب وتُحيي الأرواح 💖
     اجعل القرآن رفيقك وشاركه لعلّه يهدي قلوبًا 🌿
     
-    Original owner of the Reel: ${owner_fullname}
-    @${userName}`;
+    Original owner of the Reel: ${userName}
+`;
 
     const CAPTION = trimHashtagsToFitLimit(2200, baseCaption, [...hashtags, ...baseHashtags]);
 
@@ -79,13 +78,12 @@ async function publishReel(containerId) {
   }
 }
 
-async function postReel(video_url, caption = '', userName, owner_fullname, hashtags = []) {
+async function postReel(video_url, caption = '', userName, hashtags = []) {
   try {
     const containerId = await createMediaContainer(
       video_url,
       caption,
       userName,
-      owner_fullname,
       hashtags
     );
     console.log('Container created with ID:', containerId);
