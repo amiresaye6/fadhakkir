@@ -43,6 +43,7 @@ async function createMediaContainer(video_url, caption, userName, hashtags) {
         video_url,
         caption: CAPTION,
         share_to_feed: true,
+        publish_to_fb_feed: true
       },
       {
         params: {
